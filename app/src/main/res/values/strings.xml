@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NewsBuddy</string>
+
+    <string name="all_news_preview_image_content_description">All News preview image</string>
+
+    <string name="source_tag_text">Source: %s</string>
+    <string name="published_at_text">Published at: %s</string>
+
 </resources>

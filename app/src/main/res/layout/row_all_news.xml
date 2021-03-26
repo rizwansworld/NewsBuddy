@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/default_margin">
+
+        <ImageView
+            android:id="@+id/preview_image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/all_news_preview_image_content_description" />
+
+        <TextView
+            android:id="@+id/source_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Source: Google News"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tag_font_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_font_size"
+            android:maxLines="3"
+            android:ellipsize="end"
+            tools:text="LIVE: Treasury Secretary Yellen and Fed Chair Powell testify to Congress on coronavirus response - Yahoo Finance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/preview_image"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin" />
+
+        <TextView
+            android:id="@+id/published_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/medium_font_color"
+            tools:text="Published at: 23 March 2021, 3:50 PM"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_image"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_font_color"
+            tools:text="Exactly one year ago, with the world in the grip of a deadly pandemic, Wall Street put its Covid-19 fears aside. That jumpstarted a wave of market euphoria that has since fed a boom in unusual activity, from the irrational hype around GameStop shares to a hug…"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginTop="@dimen/margin_between_texts"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/published_at" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
