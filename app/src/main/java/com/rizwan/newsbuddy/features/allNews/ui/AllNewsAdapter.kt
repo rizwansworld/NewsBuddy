@@ -27,7 +27,7 @@ class AllNewsAdapter(private val mList: List<News>) : RecyclerView.Adapter<AllNe
 
         Glide
             .with(holder.itemView.context)
-            .load(mList[position]?.urlToImage)
+            .load(mList[position].urlToImage)
             .centerCrop()
             .apply(
                 RequestOptions()

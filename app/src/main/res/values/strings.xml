@@ -6,4 +6,7 @@
     <string name="source_tag_text">Source: %s</string>
     <string name="published_at_text">Published at: %s</string>
 
+    <string name="all_news_error_response_text">Something went wrong\nPlease try again later</string>
+    <string name="all_news_empty_response_text">No news available</string>
+
 </resources>
