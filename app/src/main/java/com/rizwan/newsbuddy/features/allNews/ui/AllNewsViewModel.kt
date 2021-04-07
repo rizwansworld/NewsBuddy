@@ -13,19 +13,6 @@ class AllNewsViewModel : ViewModel() {
 
     private val TAG = "AllNewsViewModel"
 
-    //:TODO MutableLiveData & LiveData relation
-    //:TODO Testing ViewModel
-
-    /**
-     * Repository can be a dependency
-     *
-     * Test cases for ViewModel:
-     * Success
-     * Empty
-     * Error
-     *
-     */
-
     private val _newsList = MutableLiveData<List<News>>()
     val newsList : LiveData<List<News>> = _newsList
 
@@ -50,12 +37,12 @@ class AllNewsViewModel : ViewModel() {
         handleResource(resource)
     }
 
-    private fun handleResource(resource: Resource<AllNewsDataModel>) {
+    private fun handleResource(resource: Resource<List<News>>) {
         hideProgressBar()
         when (resource) {
 
             is Resource.Success -> {
-                _newsList.postValue(resource.data?.articles)
+                _newsList.postValue(resource.data!!)
             }
             is Resource.Empty -> {
                 showEmptyView()

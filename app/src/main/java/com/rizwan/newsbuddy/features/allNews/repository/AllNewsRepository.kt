@@ -1,47 +1,30 @@
 package com.rizwan.newsbuddy.features.allNews.repository
 
-import com.rizwan.newsbuddy.features.allNews.ui.AllNewsDataModel
+import android.content.Context
+import com.rizwan.newsbuddy.features.allNews.ui.News
 import com.rizwan.newsbuddy.networking.Resource
-import retrofit2.Response
+import com.rizwan.newsbuddy.utils.ApplicationContext
 
 class AllNewsRepository {
 
     private val remoteDataSource = RemoteDataSource()
-//    private val localDatasource = LocalDataSource(context)
+    private val localDatasource = LocalDataSource(ApplicationContext.getInstance())
 
-    suspend fun getAllNews(countryCode: String, pageNumber: Int): Resource<AllNewsDataModel> {
-        return handleResponse(remoteDataSource.getAllNews(countryCode, pageNumber))
-    }
+    suspend fun getAllNews(countryCode: String, pageNumber: Int): Resource<List<News>> {
+        val localData = localDatasource.getAllNews(countryCode, pageNumber)
 
-    private fun handleResponse(response: Response<AllNewsDataModel>) : Resource<AllNewsDataModel> {
-        if (response.isSuccessful) {
-            response.body()?.let {
+        if (localData is Resource.Empty || localData is Resource.Outdated) {
+            val remoteData = remoteDataSource.getAllNews(countryCode, pageNumber)
 
-                return if (it.articles.isNotEmpty())
-                    Resource.Success(it)
-                else
-                    Resource.Empty()
-
+            if (remoteData is Resource.Success) {
+                localDatasource.saveAllNews(remoteData.data!!)
             }
-        }
-        return Resource.Error(response.message())
-    }
 
-//    suspend fun getAllNews(): Response<AllNewsDataModel> {
-//        var data = localDatasource.getAllNews()
-//
-//        if (data.isEmpty()) {
-//            val remoteData = remoteDataSource.getAllNews()
-//
-//            remoteData.forEach {
-//                localDatasource.saveNews(it)
-//            }
-//
-//            data = localDatasource.getAllNews()
-//        }
-//
-//        return data
-//    }
+            return remoteData
+        }
+
+        return localData
+    }
 
 
 

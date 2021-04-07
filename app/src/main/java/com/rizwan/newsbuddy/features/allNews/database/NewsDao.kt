@@ -1,6 +1,5 @@
 package com.rizwan.newsbuddy.features.allNews.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -12,5 +11,8 @@ interface NewsDao {
     suspend fun save(news: News)
 
     @Query("SELECT * FROM allNews")
-    fun load(): LiveData<List<News>>
+    suspend fun load(): List<News>
+
+    @Query("DELETE FROM allNews")
+    suspend fun deleteAllNews()
 }

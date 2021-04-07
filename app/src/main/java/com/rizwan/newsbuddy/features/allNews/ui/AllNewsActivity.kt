@@ -16,6 +16,7 @@ class AllNewsActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityAllNewsBinding
     private lateinit var mViewModel: AllNewsViewModel
 
+    private lateinit var adapter: AllNewsAdapter
     private val layoutManager by lazy { LinearLayoutManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,13 +32,15 @@ class AllNewsActivity : AppCompatActivity() {
         observeViewModel()
     }
 
-    private fun setupRecyclerView() {
-        mBinding.recyclerView.layoutManager = layoutManager
+    private fun observeViewModel() {
+        mViewModel.newsList.observe(this, Observer {
+            adapter.differ.submitList(it)
+        })
     }
 
-    private fun observeViewModel() {
-        mViewModel.newsList.observe(this, Observer { list ->
-            mBinding.recyclerView.adapter = AllNewsAdapter(list)
-        })
+    private fun setupRecyclerView() {
+        adapter = AllNewsAdapter()
+        mBinding.recyclerView.adapter = adapter
+        mBinding.recyclerView.layoutManager = layoutManager
     }
 }
