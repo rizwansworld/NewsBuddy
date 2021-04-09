@@ -8,14 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class WebServiceInstance {
 
-//    fun create() : WebService {
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://newsapi.org/")
-//            .build()
-//
-//        return retrofit.create(WebService::class.java)
-//    }
-
     companion object {
 
         private val retrofit by lazy {

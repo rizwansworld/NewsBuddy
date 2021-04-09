@@ -1,12 +1,16 @@
 package com.rizwan.newsbuddy.features.allNews.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
-import com.rizwan.newsbuddy.features.allNews.database.NewsDatabase
+import com.rizwan.newsbuddy.features.allNews.database.news.NewsDatabase
+import com.rizwan.newsbuddy.features.allNews.models.API
 import com.rizwan.newsbuddy.features.allNews.ui.News
 import com.rizwan.newsbuddy.networking.Resource
 
 class LocalDataSource(context: Context) : DataSource {
+
+    private val TAG = "LocalDataSource"
 
     private val DB_NAME = "allNews"
     private var db: NewsDatabase
@@ -25,10 +29,18 @@ class LocalDataSource(context: Context) : DataSource {
     ): Resource<List<News>> {
         val list = db.newsDao().load()
 
-        return if (list.isEmpty()) {
-            Resource.Empty()
-        } else {
-            Resource.Success(list)
+        Log.e(TAG, "shouldFetch: ${APIUpdateCheck().shouldFetch(API.ALLNEWS)}")
+
+        return when {
+            APIUpdateCheck().shouldFetch(API.ALLNEWS) -> {
+                Resource.Outdated()
+            }
+            list.isEmpty() -> {
+                Resource.Empty()
+            }
+            else -> {
+                Resource.Success(list)
+            }
         }
     }
 

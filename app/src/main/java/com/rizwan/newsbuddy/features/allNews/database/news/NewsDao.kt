@@ -1,4 +1,4 @@
-package com.rizwan.newsbuddy.features.allNews.database
+package com.rizwan.newsbuddy.features.allNews.database.news
 
 import androidx.room.Dao
 import androidx.room.Insert

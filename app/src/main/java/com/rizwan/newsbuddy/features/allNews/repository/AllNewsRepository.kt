@@ -1,6 +1,5 @@
 package com.rizwan.newsbuddy.features.allNews.repository
 
-import android.content.Context
 import com.rizwan.newsbuddy.features.allNews.ui.News
 import com.rizwan.newsbuddy.networking.Resource
 import com.rizwan.newsbuddy.utils.ApplicationContext
@@ -17,6 +16,7 @@ class AllNewsRepository {
             val remoteData = remoteDataSource.getAllNews(countryCode, pageNumber)
 
             if (remoteData is Resource.Success) {
+                localDatasource.clearAllNews()
                 localDatasource.saveAllNews(remoteData.data!!)
             }
 
