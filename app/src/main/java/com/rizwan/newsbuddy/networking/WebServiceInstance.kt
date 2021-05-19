@@ -19,6 +19,7 @@ class WebServiceInstance {
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .client(client)
                 .build()
         }

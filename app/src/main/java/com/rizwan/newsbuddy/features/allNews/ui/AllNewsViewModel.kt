@@ -1,20 +1,13 @@
 package com.rizwan.newsbuddy.features.allNews.ui
 
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.rizwan.newsbuddy.features.allNews.repository.AllNewsRepository
 import com.rizwan.newsbuddy.networking.Resource
-import kotlinx.coroutines.launch
 
 class AllNewsViewModel : ViewModel() {
 
-    private val TAG = "AllNewsViewModel"
-
-    private val _newsList = MutableLiveData<List<News>>()
-    val newsList : LiveData<List<News>> = _newsList
+    //private val TAG = "AllNewsViewModel"
 
     private val _progressBarVisibility = MutableLiveData<Int>(View.GONE)
     val progressBarVisibility : LiveData<Int> = _progressBarVisibility
@@ -27,30 +20,28 @@ class AllNewsViewModel : ViewModel() {
 
     private val pageNumber = 1
 
-    init {
-        getAllNews("in")
-    }
-
-    private fun getAllNews(countryCode: String) = viewModelScope.launch {
-        showProgressBar()
-        val resource = AllNewsRepository().getAllNews(countryCode, pageNumber)
-        handleResource(resource)
-    }
-
-    private fun handleResource(resource: Resource<List<News>>) {
-        hideProgressBar()
+    val newsList : LiveData<List<News>> = Transformations.map(
+        AllNewsRepository().getAllNews("sa", pageNumber)
+    ) { resource ->
         when (resource) {
-
             is Resource.Success -> {
-                _newsList.postValue(resource.data!!)
+                hideProgressBar()
+                resource.data
             }
             is Resource.Empty -> {
+                hideProgressBar()
                 showEmptyView()
+                resource.data
             }
             is Resource.Error -> {
+                hideProgressBar()
                 showErrorView()
+                resource.data
             }
-
+            is Resource.Loading -> {
+                showProgressBar()
+                listOf() // empty list
+            }
         }
     }
 

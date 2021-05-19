@@ -9,12 +9,12 @@ import com.rizwan.newsbuddy.features.allNews.models.APILastUpdatedTime
 import java.util.*
 
 @Dao
-interface APILastUpdatedTimeDao {
+abstract class APILastUpdatedTimeDao {
 
     @Query("SELECT timestamp from apiLastUpdatedTime WHERE apiName = :api")
-    suspend fun getLastUpdatedTime(api: API) : Long?
+    abstract fun getLastUpdatedTime(api: API) : Long?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertTimestamp(apiLastUpdatedTime: APILastUpdatedTime)
+    abstract fun upsertTimestamp(apiLastUpdatedTime: APILastUpdatedTime)
 
 }
